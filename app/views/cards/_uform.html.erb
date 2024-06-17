@@ -1,0 +1,43 @@
+
+<%= form_with(model: @card, local: true) do |form| %>
+  <% if @card.errors.any? %>
+    <div style="color: red;">
+      <h4><%= pluralize(@card.errors.count, 'error') %> prohibited this card from being saved:</h4>
+      <ul>
+        <% @card.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, "Título", class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control rounded-pill' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Descripción", class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control rounded' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :priority, "Prioridad", class: 'form-label' %>
+    <%= form.select :priority, ['low', 'medium', 'high'], { prompt: 'Seleccione Prioridad' }, class: 'form-select rounded-pill' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :assignee_id, "Asignado", class: 'form-label' %>
+    <%= form.collection_select :assignee_id, User.all, :id, :full_name, { prompt: 'Seleccione Asignado' }, class: 'form-select rounded-pill' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :status_list_id, "Estado", class: 'form-label' %>
+    <%= form.collection_select :status_list_id, StatusList.all, :id, :title, { prompt: 'Seleccione Lista de Estado' }, class: 'form-select rounded-pill' %>
+  </div>
+  <br>
+  <div class="d-flex justify-content-between">
+    <%= form.submit 'Guardar', class: 'btn btn-primary' %>
+    <%= link_to 'Volver', cards_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>

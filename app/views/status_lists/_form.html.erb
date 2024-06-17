@@ -1,0 +1,24 @@
+<%= form_with model: status_list, local: true do |form| %>
+    <% if @status_list.errors.any? %>
+        <div style="color: red;">
+            <h4><%= pluralize(@status_list.errors.count, "error") %> prohibited this status from being saved:</h4>
+            <ul>
+                <% @status_list.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <br><br>
+    <div class="form-group mb-3 col-md-12">
+        <%= form.label :title, "Título" %>
+        <%= form.text_field :title, class: 'form-control rounded-pill' %>
+    </div>
+
+    <%= form.hidden_field :board_id, value: @board_id %>
+    <br>
+    <div class="d-flex justify-content-between">
+        <%= form.submit "Crear", class: "btn btn-primary" %>
+        <%= link_to "Volver", board_path(@board_id), class: "btn btn-secondary" %>
+    </div>
+<% end %>

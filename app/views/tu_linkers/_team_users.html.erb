@@ -1,0 +1,26 @@
+<div class="d-flex justify-content mb-3">
+    <%= link_to 'Nuevo participante', new_tu_linker_path(team_id: @team.id), class: 'btn btn-primary' %>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nombre de Usuario</th>
+                <th scope="col">Correo Electrónico</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if @team.users.any? %>
+                <% @team.users.each do |team_user| %>
+                    <tr>
+                        <td><%= link_to team_user.username, user_path(team_user), class: 'text-decoration-none' %></td>
+                        <td><%= team_user.email %></td>
+                    </tr>
+                <% end %>
+            <% else %>
+                <p>No hay usuarios para mostrar en este equipo.</p>
+            <% end %>
+        </tbody>
+    </table>
+</div>            

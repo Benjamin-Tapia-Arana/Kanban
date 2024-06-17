@@ -1,0 +1,1 @@
+No se modificó el modelo, para efectos de evitar la confusion de nombre en el modelo teams_user,este, fue cambiado por tu_linkers, pero, cumple la misma función, por efectos de nombre y para no generar confusión con teams

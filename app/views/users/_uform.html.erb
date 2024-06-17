@@ -1,0 +1,63 @@
+<%= form_with model: @user, local: true do |form| %>
+    <h1>Editar Usuario</h1>
+
+    <% if @user.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+            <h4><%= pluralize(@user.errors.count, "error") %> impidieron guardar el usuario:</h4>
+            <ul>
+                <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="mb-3">
+        <%= form.label :username, "Nombre de usuario" %>
+        <%= form.text_field :username, class: 'form-control rounded-pill', id: 'username', required: true, oninvalid: "this.setCustomValidity('Por favor, ingresa un nombre de usuario')" %>
+    </div>
+
+    <div class="mb-3">
+        <%= form.label :email, "Email" %>
+        <%= form.email_field :email, class: 'form-control rounded-pill', id: 'email', required: true, oninvalid: "this.setCustomValidity('Por favor incluye un \"@\" en la dirección de email. Ejemplo: nombre@dominio.com')" %>
+    </div>
+
+    <div class="mb-3">
+        <%= form.label :password, "Contraseña" %>
+        <%= form.password_field :password, class: 'form-control rounded-pill', id: 'password', required: true, minlength: 8, oninvalid: "this.setCustomValidity('La contraseña debe tener al menos 8 caracteres')" %>
+    </div>
+
+    <div class="mb-3">
+        <%= form.label :password_confirmation, "Confirmar contraseña" %>
+        <%= form.password_field :password_confirmation, class: 'form-control rounded-pill', id: 'password_confirmation', required: true, minlength: 8, oninput: "checkPasswordMatch()", oninvalid: "this.setCustomValidity('Las contraseñas no coinciden')" %>
+    </div>
+
+    <div class="mb-3">
+        <%= form.label :full_name, "Nombre completo" %>
+        <%= form.text_field :full_name, class: 'form-control rounded-pill', id: 'full_name', required: true, oninvalid: "this.setCustomValidity('Por favor, ingresa tu nombre completo')" %>
+    </div>
+
+    <%= form.submit "Guardar Cambios", class: 'btn btn-primary' %>
+    <%= link_to 'Cancelar', user_path(@user), class: 'btn btn-secondary' %>
+
+<% end %>
+<br><br>
+<%= button_to 'Eliminar', user_path(@user), method: :delete, data: { turbo_confirm: '¿Estás segura/o de eliminar este usuario?' }, class: 'btn btn-danger me-2' %>
+
+<script>
+  document.querySelectorAll('.form-control').forEach(input => {
+    input.oninput = () => input.setCustomValidity('');
+  });
+
+  function checkPasswordMatch() {
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('password_confirmation').value;
+    
+    if (password !== confirmPassword) {
+      document.getElementById('password_confirmation').setCustomValidity('Las contraseñas no coinciden');
+    } else {
+      document.getElementById('password_confirmation').setCustomValidity('');
+    }
+  }
+</script>
+

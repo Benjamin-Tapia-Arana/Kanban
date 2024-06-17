@@ -1,0 +1,16 @@
+<% team = Team.find(@team_id) %>
+<% existing_user_ids = team.users.pluck(:id) %>
+<%= form_with model: @tu_linker, local: true do |form| %>
+    <h1>Agregar participante a <%= team.name %></h1>
+    <br>
+    <div class="mb-3">
+        <%= form.label :user_id, "Usuario" %>
+        <%= form.collection_select :user_id, User.where.not(id: existing_user_ids), :id, :username, { prompt: "Selecciona un usuario" }, class: 'form-control rounded-pill', id: 'user_id', required: true, oninvalid: "this.setCustomValidity('Por favor, selecciona un usuario')" %>
+    </div>
+    <%= form.hidden_field :team_id, value: @team_id %>
+    <br>
+    <div class="d-flex justify-content-between">
+        <%= form.submit "Agregar", class: 'btn btn-primary' %>
+        <%= link_to 'Volver', tu_linkers_path(team_id: @team_id), class: 'btn btn-secondary' %>
+    </div>
+<% end %>

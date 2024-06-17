@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'general', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module' %>
+    <link rel="icon" type="image/x-icon" href="<%= asset_path('k.png') %>">
+    <title> Kanban</title>
+  </head>
+  <body>
+      <%= render 'layouts/header' %> 
+      <% flash.each do |key, message| %>
+        <div class="flash<%= key %>">
+          <%= message %>
+        </div>
+      <% end %>
+      <%= yield %>
+      <div class="flexbox">
+        <%= render 'layouts/footer' %>
+      </div>
+  </body> 
+</html>

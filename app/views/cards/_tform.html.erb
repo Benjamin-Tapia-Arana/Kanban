@@ -1,0 +1,44 @@
+
+<%= form_with(model: @card, local: true) do |form| %>
+  <% if @card.errors.any? %>
+    <div style="color: red;">
+      <h4><%= pluralize(@card.errors.count, 'error') %> prohibited this card from being saved:</h4>
+      <ul>
+        <% @card.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% users = StatusList.find(@status_list_id).board.team.users %>
+
+  <div class="mb-3">
+    <%= form.label :title, "Título", class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control rounded-pill' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Descripción", class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control rounded' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :priority, "Prioridad", class: 'form-label' %>
+    <%= form.select :priority, ['low', 'medium', 'high'], { prompt: 'Seleccione Prioridad' }, class: 'form-select rounded-pill' %>
+  </div>
+
+  <%= form.hidden_field :creator_id, value: current_user.id %>
+
+  <div class="mb-3">
+    <%= form.label :assignee_id, "Asignado", class: 'form-label' %>
+    <%= form.collection_select :assignee_id, users, :id, :username, { prompt: 'Seleccione Asignado' }, class: 'form-select rounded-pill' %>
+  </div>
+
+  <%= form.hidden_field :status_list_id, value: @status_list_id %>
+  <br>
+  <div class="d-flex justify-content-between">
+    <%= form.submit 'Guardar', class: 'btn btn-primary' %>
+    <%= link_to 'Volver', cards_path, class: 'btn btn-secondary' %>
+  </div>
+  
+<% end %>

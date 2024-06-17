@@ -1,0 +1,40 @@
+
+<div class="row justify-content-center">
+  <div class="col-md-12"> 
+    <div class="card">
+      <div class="card-title">
+        <h1>Últimos tablas en Kanban</h1>
+        <a href="<%= all_boards_path %>" class="btn btn-primary">Ver todas las tablas</a>
+      </div>
+      <div class="row">
+        <% @latest_boards.each do |board| %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title"><%= board.title %></h5>
+                <p>Creado por: <%= User.find(board.creator_id).username %></p>
+                <% if board.team.users.include?(current_user) %>
+                  <a href="<%= board_path(board) %>" class="btn btn-primary">Ver tabla</a>
+                <% else %>
+                  <p class="light-gray", style="color: #666;">Para ver esta tabla, debes ser miembro del equipo.</p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        
+      });
+    });
+  });
+</script>

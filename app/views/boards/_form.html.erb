@@ -1,0 +1,26 @@
+<%= form_with model: board, local: true do |form| %>
+    <% if @board.errors.any? %>
+        <div style="color: red;">
+            <h4><%= pluralize(@board.errors.count, "error") %> prohibited this board from being saved:</h4>
+            <ul>
+                <% @board.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <% users = (Team.find(team_id)).users %>
+    <br><br>
+    <div class="form-group mb-3 col-md-12">
+        <%= form.label :title, "Título" %>
+        <%= form.text_field :title, class: 'form-control rounded-pill' %>
+    </div>
+
+    <%= form.hidden_field :creator_id, value: current_user.id %>
+    <%= form.hidden_field :team_id, value: @team_id %>
+    <br>
+    <div class="d-flex justify-content-between">
+        <%= form.submit 'Crear', class: 'btn btn-primary' %>
+        <%= link_to 'Volver', boards_path, class: 'btn btn-secondary' %>
+    </div>
+<% end %>

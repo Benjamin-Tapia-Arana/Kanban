@@ -1,0 +1,24 @@
+<%= form_with model: team, local: true do |form| %>
+    <% if @team.errors.any? %>
+        <div style="color: red;">
+            <h4><%= pluralize(@team.errors.count, "error") %> prohibited this team from being saved:</h4>
+            <ul>
+                <% @team.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <div class="mb-3">
+        <%= form.label :name, "Nombre" %>
+        <%= form.text_field :name, class: 'form-control rounded-pill' %>
+    </div>
+
+    <%= form.hidden_field :creator_id, value: current_user.id %>
+
+    <br>
+    <div class="d-flex justify-content-between">
+        <%= form.submit 'Crear', class: 'btn btn-primary' %>
+        <%= link_to 'Volver', boards_path, class: 'btn btn-secondary' %>
+    </div>
+<% end %>

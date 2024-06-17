@@ -1,0 +1,39 @@
+<% Team.all.each do |team| %>
+  <div class="card mt-4 d-flex justify-content mb-3">
+    <div class="card-header">
+      <h2><%= team.name %></h2>
+      <% if team.users.include?(current_user) =%>
+        <div class="d-flex">
+          <%= link_to 'Participantes', tu_linkers_path(team_id: team.id), class: 'btn btn-sm btn-info me-2' %>
+          <%= link_to 'Cambiar nombre', edit_team_path(team), class: 'btn btn-sm btn-warning me-2' %>
+          <% if team.creator_id == current_user.id %>
+            <%= button_to 'Eliminar', team_path(team), method: :delete,  data: { turbo_confirm: '¿Estás segura/o de eliminar este proyecto?' }, class: 'btn btn-sm btn-danger' %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if team.users.include?(current_user) =%>
+      <div class="card-body">
+        <% if team.boards.any? %>
+          <ul class="list-group">
+            <% team.boards.each do |board| %>
+              <li class="list-group-item">
+                <%= link_to board.title, board_path(board), class: 'plain-text:-link text-decoration-none' %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No hay tareas para mostrar en este equipo.</p>
+        <% end %>
+        <br>
+        <div>
+          <%= link_to 'Nueva tabla', new_board_path(team_id: team.id), class: 'btn btn-sm btn-primary' %>
+        </div>
+      </div>
+    <% else %>
+      <div class="card-body">
+        <p>No tienes acceso a este equipo.</p>
+      </div>
+    <% end %>
+  </div>
+<% end %>

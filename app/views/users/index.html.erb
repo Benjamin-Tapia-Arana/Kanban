@@ -1,0 +1,25 @@
+<div class="container">  
+  <div class="card col-md-10">  
+
+    <h1 class="my-4">Lista de Usuarios</h1>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Nombre de Usuario</th>
+            <th scope="col">Correo Electrónico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= link_to user.username, user_path(user), class: 'text-decoration-none' %></td>
+              <td><%= user.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="card col-md-6">
+      <h2>Sign up</h2>
+
+      <%= form_with model: @user, local: true do |form| %>
+          <% if @user.errors.any? %>
+              <div id="error_explanation" class="alert alert-danger">
+                  <h4><%= pluralize(@user.errors.count, "error") %> impidieron guardar el usuario:</h4>
+                  <ul>
+                      <% @user.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                      <% end %>
+                  </ul>
+              </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= form.label :username, "Nombre de usuario" %>
+            <%= form.text_field :username, class: 'form-control rounded-pill', id: 'username', required: true %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :email, "Email" %>
+            <%= form.email_field :email, class: 'form-control rounded-pill', id: 'email', required: true %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :password, "Contraseña" %>
+            <%= form.password_field :password, class: 'form-control rounded-pill', id: 'password', required: true %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :password_confirmation, "Confirmar contraseña" %>
+            <%= form.password_field :password_confirmation, class: 'form-control rounded-pill', id: 'password_confirmation', required: true %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :full_name, "Nombre completo" %>
+            <%= form.text_field :full_name, class: 'form-control rounded-pill', id: 'full_name', required: true %>
+          </div>
+          <h2>
+            <%= form.submit "Registrarse", class: 'btn btn-primary' %>
+          </h2>
+          <%= render "devise/shared/links" %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
